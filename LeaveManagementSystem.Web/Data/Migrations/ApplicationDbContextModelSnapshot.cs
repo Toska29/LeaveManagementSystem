@@ -127,6 +127,11 @@ namespace LeaveManagementSystem.Web.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -179,23 +184,9 @@ namespace LeaveManagementSystem.Web.Data.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "d46ad749-c5cb-4e69-8e5a-e2e7e308e837",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "19913130-4b57-41a0-801f-bf2e5e7a56dd",
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG3ObqcKtCTayv/YKLC+uWwk+jX9+tm5pbg5XtQt0duj8MByKMHryXaVH5zTqWCumg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "0221e926-c487-409b-88a3-b3233ccc6d8e",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@gmail.com"
-                        });
+                    b.HasDiscriminator().HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -288,6 +279,43 @@ namespace LeaveManagementSystem.Web.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("LeaveManagementSystem.Web.Data.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d46ad749-c5cb-4e69-8e5a-e2e7e308e837",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c9c8b5af-0fe8-4d33-a121-12d7e9919fd4",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFML1L0jdp+9v71S38SWfXLKoyFbBhhTWiWOtECOvov/89S3R9Spgsa5GVLtjmapOQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "809d63b1-ef98-4a44-9037-0d89d9faba90",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com",
+                            DateOfBirth = new DateOnly(2024, 11, 18),
+                            FirstName = "Default",
+                            LastName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

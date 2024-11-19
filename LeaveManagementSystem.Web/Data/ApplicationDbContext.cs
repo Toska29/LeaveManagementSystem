@@ -1,5 +1,4 @@
-﻿using LeaveManagementSystem.Web.Data.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,21 +32,26 @@ namespace LeaveManagementSystem.Web.Data
                 Name = "Admin",
                 NormalizedName = "ADMIN"
             });
-            PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
-            builder.Entity<IdentityUser>().HasData(
-                new IdentityUser {
+            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+            builder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser
+                {
                     Id = "d46ad749-c5cb-4e69-8e5a-e2e7e308e837",
                     UserName = "admin@gmail.com",
                     Email = "admin@gmail.com",
                     NormalizedEmail = "ADMIN@GMAIL.COM",
                     NormalizedUserName = "ADMIN@GMAIL.COM",
                     PasswordHash = passwordHasher.HashPassword(null, "Password2024"),
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FirstName = "Default",
+                    LastName = "Admin",
+                    DateOfBirth = new DateOnly(2024, 11, 18)
                 }
                 );
 
             builder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> {
+                new IdentityUserRole<string>
+                {
                     UserId = "d46ad749-c5cb-4e69-8e5a-e2e7e308e837",
                     RoleId = "b47ad046-1092-43bb-a2f0-e697bde302d2"
                 }
