@@ -18,9 +18,9 @@ namespace LeaveManagementSystem.Web.Services.Implementations
                 Body = htmlMessage,
                 IsBodyHtml = true,
             };
-           mailMessage.To.Add(new MailAddress(email));
-           using SmtpClient smtpClient = new SmtpClient(server, port);
-           await smtpClient.SendMailAsync()
+            mailMessage.To.Add(new MailAddress(email));
+            using SmtpClient smtpClient = new SmtpClient(server, port);
+            await smtpClient.SendMailAsync(mailMessage);
         }
     }
 }
